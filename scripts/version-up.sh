@@ -11,6 +11,8 @@
 #  http://tldp.org/LDP/abs/html/comparison-ops.html
 #  https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
+# TAKEN FROM (with minor edits): https://gist.github.com/OleksandrKucherenko/9fb14f81a29b46886ccd63b774c5959f
+
 ## display help
 function help(){
   echo 'usage: ./version-up.sh [-r|--release] [-a|--alpha] [-b|--beta] [-c|--release-candidate]'
@@ -165,17 +167,6 @@ function compose(){
 
   if [[ "${PARTS[3]}" == "0" ]]; then # if revision is ZERO
     REVISION=""
-  fi
-
-  # shrink patch and revision
-  if [[ -z "${REVISION// }" ]]; then
-    if [[ "${PARTS[2]}" == "0" ]]; then
-      PATCH=""
-    fi
-  else # revision is not EMPTY
-    if [[ "${#PATCH}" == 0 ]]; then
-      PATCH=".0"
-    fi
   fi
 
   # remove suffix if we don't have a alpha/beta/rc
@@ -354,15 +345,6 @@ fi
 if [[ "$TAG" == "$INIT_VERSION" ]]; then
     TAG='0.0'
 fi
-VERSION_FILE=version.properties
-
-echo "# $(date)" >${VERSION_FILE}
-echo snapshot.version=$(compose) >>${VERSION_FILE}
-echo snapshot.lasttag=$TAG >>${VERSION_FILE}
-echo snapshot.revision=$REVISION >>${VERSION_FILE}
-echo snapshot.hightag=$TOP_TAG >>${VERSION_FILE}
-echo snapshot.branch=$BRANCH >>${VERSION_FILE}
-echo '# end of file' >>${VERSION_FILE}
 
 # should we apply the changes
 if [[ "$DO_APPLY" == "1" ]]; then
