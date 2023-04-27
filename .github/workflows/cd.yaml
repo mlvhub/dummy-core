@@ -1,0 +1,27 @@
+name: cd
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Tests
+        run: |
+          make test
+
+      - name: Version Apply
+        run: |
+          make version-apply
