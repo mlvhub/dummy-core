@@ -8,4 +8,4 @@ Sample project to work with multi-module repositories.
 **Service B:** https://github.com/mlvhub/dummy-service-b
 
 ---
-This Project is the "core", meaning it's a shared library providing core logic to other libraries.
+This project is the "core", meaning it's a shared library providing core logic to other libraries.
